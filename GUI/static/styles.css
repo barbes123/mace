@@ -1,0 +1,246 @@
+body {
+  overscroll-behavior-y: none;
+  height: 100%;
+  overflow: auto;
+}
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+#alarmtable 
+{
+  border:solid 5px black;
+  background-color:oldlace;
+  width:450px;
+  height:530px;
+  display:inline;
+  margin-right:200px;
+  float:right;
+  overflow:scroll;
+  text-align:center;
+  margin-top:10px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size:20px
+}
+
+#secondtbl{
+  margin-top:30px;
+  margin-bottom:30px;
+}
+
+#sp{
+  background-color:royalblue;
+  border-radius:3px;
+  border-color:black;
+  font-size:24px;
+  text-align:center;
+  margin-bottom: 10px;
+}
+
+#state{
+  font-size:30px;
+  font-weight: bold;
+  color:crimson;
+  text-align:center;
+  margin:auto;
+}
+
+#etitle{
+  border:solid 7px darkslategrey;
+  background-color:lightskyblue;
+  color:midnightblue;
+  text-align:center;
+  font-size:25px;
+}
+
+#firsttbl{
+  margin-top:120px;
+}
+
+#command{
+border:gray 5px solid;
+background-color: black;
+color:lightgreen;
+text-align: center;
+float:right;
+width:450px;
+height:550px;
+margin-right:200px;
+}
+
+
+.monvarbuttons{
+  
+  background-color:royalblue;
+    border-radius:3px;
+    border-color:black;
+    font-size:24px;
+}
+
+.alarmelem{
+  border-style: solid;
+  border-width: 5px;
+  border-color: midnightblue;
+  background-color:lightblue;
+  width:5px;
+}
+
+.tfill{
+  background-color: cornflowerblue;
+}
+
+.call{
+  background-color: yellow;
+}
+
+.email{
+  background-color: greenyellow;
+}
+
+.shutdown{
+  background-color: red;
+}
+
+.alarmxtable{
+  text-align: center;
+  margin:auto
+}
+
+.alarmxtable thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: center;
+}
+
+.alarmxtable th{
+  border-bottom: 2px black solid;
+  background-color:skyblue;
+}
+
+.alarmxtable td{
+  border-bottom: 2px black solid;
+  border-right: 2px black solid;
+  border-left: 2px black solid;
+  background-color: white;
+  font-weight: bold;
+  font-size:22px
+}
+
+.reset{
+    background-color:royalblue;
+    border-radius:3px;
+    border-color:black;
+    font-size:24px;
+}
+
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+}
+  
+.form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+}
+  
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+   
+.form-container input[type=text], .form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+  
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+ 
+.form-container .btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+ 
+.form-container .cancel {
+    background-color: red;
+}
+  
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+
+.detname{
+    font-weight: bolder;
+    font-size:20px;
+    color:white;
+    background-color:black;
+}
+  
+.data{
+  font-size:30px;
+  color:lightgreen;
+  background-color: black;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    text-align:center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top:-90px;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width:1800px;
+    margin-left:60px;
+    float:left; 
+}
+
+.styled-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: center;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}

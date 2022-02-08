@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>GUIalarm</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap" rel="stylesheet">
+    <link href="static/styles.css" rel="stylesheet">
+
+</head>
+
+
+<script>
+
+  function openForm(n) {
+    document.getElementById("myForm"+String(n)).style.display = "block";
+  }
+
+  function closeForm(n) {
+    document.getElementById("myForm"+String(n)).style.display = "none";
+  }
+
+  function openFormlim(n) {
+    document.getElementById("myFormlim"+String(n)).style.display = "block";
+  }
+
+  function closeFormlim(n) {
+    document.getElementById("myFormlim"+String(n)).style.display = "none";
+  }
+
+  function refresh(){
+      window.location.reload("Refr")
+  }
+
+</script>
+
+
+<body style="background-color:lightgrey;">
+  
+  <!--<meta http-equiv="refresh" content="20" />-->
+  
+  <div class="main">
+
+    <div id="etitle">
+
+    <h1>ELIADE MACE CONTROL UNIT</h1>
+
+    </div>
+
+    <div id="firsttbl">
+      <table class="styled-table">
+
+        <thead>
+            <tr>
+             <th>Detector</th>
+             <th>Temperature</th>
+             <th colspan="4">Limits (C1,C2,C3,C4)</th>
+             <th>Set Slot, Channels</th>
+             <th>Alarm State</th>
+             <th>Reset Button</th>           
+            </tr>
+        </thead>
+
+      {% for n in range(1,detlistno+1) %}
+
+      <tr>
+
+      <div>
+      
+        <td class="detname"> Detector {{n}} </td>
+        <td class="data"> 
+            {{dataval[n-1]}}
+          
+        </td>
+        <td style="font-size:16px;font-weight: bold;">
+
+          <p style="font-weight: bolder;color:darkgoldenrod;font-size:18px">C1</p>
+            <p style="font-size:20px">
+              MIN:{{splist[n-1][0][0]}}<br>
+              MAX:{{splist[n-1][0][1]}}
+            </p>
+        </td>
+
+        <td style="font-size:16px;font-weight: bold;">
+
+          <p style="font-weight: bolder;color:orange;font-size:18px">C2</p>
+            <p style="font-size:20px">
+              MIN:{{splist[n-1][1][0]}}<br>
+              MAX:{{splist[n-1][1][1]}}
+            </p>
+        </td>
+
+        <td style="font-size:16px;font-weight: bold;">
+
+          <p style="font-weight: bolder;color:red;font-size:18px">C3</p>
+            <p style="font-size:20px">
+              MIN:{{splist[n-1][2][0]}}<br>
+              MAX:{{splist[n-1][2][1]}}
+            </p>
+        </td>
+
+        <td style="font-size:16px;font-weight: bold;">
+
+          <p style="font-weight: bolder;color:blue;font-size:18px">C4</p>
+            <p style="font-size:20px">
+              MIN:{{splist[n-1][3][0]}}<br>
+              MAX:{{splist[n-1][3][1]}}
+            </p>
+        </td>
+
+        <td>
+
+          <button onclick="openFormlim( '{{ n }}' )" id="sp">Set Parameters</button> 
+       
+          <div class="form-popup" id="myFormlim{{n}}">
+  
+            <form action="" class="form-container" id="formlim{{n}}" method="POST">
+  
+              <h1>Alarm limits - Detector {{n}}</h1>
+          
+              <label for="CHNLS{{n}}">
+                <b style="font-size:16px">Set C1, C2, C3, C4 intervals:</b>
+              </label>
+              <p style="font-size:16px;font-weight: bold;">C1:</p>
+              <input style="font-size:18px" type="text" name="limitsC1{{n}}" id="limitsC1{{n}}" value="{{splist[n-1][0][0]}},{{splist[n-1][0][1]}}" required>
+              <p style="font-size:16px;font-weight: bold;">C2:</p>
+              <input style="font-size:18px" type="text" name="limitsC2{{n}}" id="limitsC2{{n}}" value="{{splist[n-1][1][0]}},{{splist[n-1][1][1]}}" required>
+              <p style="font-size:16px;font-weight: bold;">C3:</p>
+              <input style="font-size:18px" type="text" name="limitsC3{{n}}" id="limitsC3{{n}}" value="{{splist[n-1][2][0]}},{{splist[n-1][2][1]}}" required>
+              <p style="font-size:16px;font-weight: bold;">C4:</p>
+              <input style="font-size:18px" type="text" name="limitsC4{{n}}" id="limitsC4{{n}}" value="{{splist[n-1][3][0]}},{{splist[n-1][3][1]}}" required>
+
+              <button type="submit" class="btn" id="btn{{n}}" value="limits",name="limits{{n}}">
+                Set parameters
+              </button>
+              <button type="submit" class="btn cancel" id="btn cancel{{n}}" onclick="closeFormlim( '{{ n }}' )">
+                Close
+              </button>
+  
+            </form>
+  
+          </div> 
+
+        </td>
+        {% if alarmlist[n-1]==4 %}
+            <td style="color:blue;font-weight:bold;font-size:25px" class="alarmelem">
+              {{alarmlist[n-1]}} 
+            </td>
+        {% elif alarmlist[n-1]!=0 and alarmlist[n-1]!='edge' and alarmlist[n-1]!='dc' %}
+
+           <td style="color:red;font-weight:bold;font-size:25px" class="alarmelem">
+             {{alarmlist[n-1]}} 
+           </td>
+
+        {% elif alarmlist[n-1]=='dc' %}
+
+        <td style="color:brown;font-weight:bold;font-size:25px" class="alarmelem">
+          {{alarmlist[n-1]}} 
+        </td>
+
+        {% elif alarmlist[n-1]==0 %}
+
+           <td style="color:green;font-weight:bold;font-size:25px" class="alarmelem">
+            {{alarmlist[n-1]}} 
+           </td>
+
+        {% else %}
+          <td style="color:orange;font-weight:bold;font-size:25px" class="alarmelem">
+            {{alarmlist[n-1]}} 
+          </td>
+
+        {% endif %}
+
+      <td>
+        
+        <form action="" method="POST">
+           <button type='submit' name="reset" value="reset{{n}}" style="background-color:limegreen;" class="reset">
+            Reset alarm
+           </button>
+        </form>
+      
+      </td>
+  
+      </div>
+
+    </tr>
+
+      {% endfor %}
+
+      </table>
+
+    </div>
+
+
+    <div id="command">
+
+        <h1 style="font-size:30px;">Code Command Panel</h1>
+
+            <p style="font-size:25px">MACE Status:</p>
+
+            {% if activevar %}
+              <p style="color:green;font-size:20px">Active</p>
+            {% else %}
+              <p style="color:red;font-size:20px">Inactive</p>
+            {% endif %}
+
+            <p style="font-size: 25px;">Validation Status</p>
+
+            {% if validationvariable==0 %}
+              <p style="color:red;font-size:20px">Incorrect correlation</p>
+            {% elif validationvariable==1 %}
+              <p style="color:green;font-size:20px">Validated</p>
+            {% else %}
+              <p style="color:lightsteelblue;font-size:20px">Not confirmed</p>
+            {% endif %}
+
+        <form action="" method="POST">
+
+          <button type="submit" value="Sta" name="Start" style="margin-top:10px;font-size:25px;background-color:limegreen;color:black;width:140px;height:50px;border-collapse: collapse;">Start</button><br>
+          <button type="submit" value="Sto" name="Stop" style="margin-top:10px;font-size:25px;background-color:red;color:black;width:140px;height:50px;border-collapse: collapse;">Stop</button><br>
+          <button type="submit" value="Refr" name="Refresh" style="margin-top:10px;font-size:25px;background-color:lightslategrey;color:black;width:140px;height:50px;border-collapse: collapse;">Refresh</button><br>
+          <button type="submit" value="Val" name="Validate" style="margin-top:10px;font-size:20px;background-color:goldenrod;color:black;width:140px;height:50px;border-collapse: collapse;">Validate</button>   
+      
+        </form>
+
+    </div>
+
+
+    <table class="styled-table" id="secondtbl">
+
+      <thead>
+        <tr>
+          <th>Detector</th>
+          <th>Slot</th>
+          <th>Channels</th>
+          <th>MonVar</th>
+          <th>Enable MonVar</th>
+          <th>Set Slot/Chnls Map</th>
+        </tr>
+     </thead>
+
+      {% for n in range(1,detlistno+1) %}
+        <tr>
+
+          <td style="font-weight: bolder;font-size:20px;">
+            Detector {{n}} 
+          </td>
+          <td style="font-weight: bold;font-size: 18px;">
+            {{hvslotarray[n-1]}}
+          </td>
+          <td style="font-weight: bold;font-size: 18px;">
+
+            {% for i in chnlsarray[n-1] %}
+              {{i}}  
+            {% endfor %}
+          
+          </td>
+          <td style="font-weight: bold;font-size: 18px;">
+            {% if monvararray[n-1] %}
+            <p style="color:green;font-size:16px">Active</p>
+            {% else %}
+            <p style="color:red;font-size:16px">Inactive</p>
+            {% endif %}
+          </td>
+          <td>
+            <form action="" method="POST">
+              <button type="submit" class="monvarbuttons" id="actmon" style="background-color: green;"  value="actmonvar" name="actmonvar{{n}}" onclick="active()">
+                Activate
+              </button>
+              <button type="submit" class="monvarbuttons" id="dismon" style="background-color:indianred;" value="dismonvar" name="dismonvar{{n}}" onclick="inactive()">
+                Disable
+              </button>
+            </form>
+          </td>
+          <td>
+            <button onclick="openForm( '{{ n }}' )" id="sp">
+              Set Map
+            </button>
+        
+            <div class="form-popup" id="myForm{{n}}">
+
+              <form action="" class="form-container" id="form{{n}}" method="POST">
+          
+                <h1>Assign slot, channels - Detector {{n}}</h1>
+
+                <label for="CHNLS{{n}}">
+                  <b style="font-size:22px">Format:Slot,ch1,ch2,<br>ch3,etc... (write null to delete values)
+                  </b>
+                </label>
+                <input style="font-size:18px" type="text" placeholder="Enter Detector Slot, Channels" name="CHNLS{{n}}" id="CHNLS{{n}}" required>
+                <button type="submit" class="btn" id="btn{{n}}" value="CHNLS{{n}}",name="CHNLS{{n}}">
+                  Set parameters
+                </button>
+                <button type="submit" class="btn cancel" id="btn cancel{{n}}" onclick="closeForm( '{{ n }}' )">
+                  Close
+                </button>
+    
+              </form>
+  
+            </div> 
+          </td>
+
+        </tr>
+      
+      {% endfor %}
+
+    </table>
+  
+
+    <div id="alarmtable">
+
+      <h3 style="color:blue;font-size: 30px;font-style: italic;">
+        Table of previous alarms
+      </h3>
+
+      <form action="" method="POST">
+      
+        <button type="submit" value="dbdel" name="InfDel" style="margin-top:5px;margin-bottom:15px;font-size:20px;background-color:deepskyblue;color:black;width:190px;height:50px;border:darkblue 2px solid;">Clear database</button>
+    
+      </form>
+        
+      <table class="alarmxtable">
+          
+        <tr>
+          {% for header in headings %}
+
+            <th style="text-align: center;">{{header}}</th>
+
+          {% endfor %}
+        </tr>
+
+        {% if data %}
+
+          {% for row in data %}
+
+            <tr>
+
+              {% for cell in row %}
+
+                {% if cell=="SendEmail"%}
+                  <td style="margin:auto;background-color: yellow;">{{cell}}</td>
+                {% elif cell=="ShutDownVoltage" %}
+                  <td style="margin:auto;background-color:red;">{{cell}}</td>
+                {% elif cell=="Call" %}
+                  <td style="margin:auto;background-color:orange;">{{cell}}</td>
+                {% elif cell=="Filling" %}
+                <td style="margin:auto;background-color:blue;">{{cell}}</td>
+                {% else %}
+                  <td style="margin:auto;">{{cell}}</td>
+                {% endif %}
+
+              {% endfor %}
+
+            </tr>
+
+          {% endfor %}
+
+        {% endif %}
+        
+      </table>
+    
+    </div> 
+    
+  </div>
+   
+</body>
+
+</html>

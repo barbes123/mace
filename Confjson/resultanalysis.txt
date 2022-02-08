@@ -1,0 +1,60 @@
+1 detector:
+increase-worked
+increase and decrease-worked
+
++1 value for trigger delay for call and email(insignificant latency)
+1 detector test passed.
+
+
+6detector:
+first test:
+1 email missing
+2 calls missing
+2 sd missing
+0 filling missing
+0 sd missing
+1 call missing
+all emails missing
+
+second test: (removing time from alarming functions)
+removed time made influxdb server not record all the alarms, although there is just one missing email alarm
+the others were triggered but not recorded.
+adding small time instead of one second.
+
+third test:(with settings mentioned)
+improvements but still poor quality.
+increasing time between read-outs.
+
+fourth test:(with settings mentioned)
+better quality.
+increasing read-out time and influxdb time
+
+fifth test:
+read-out time permitted all alarms to trigger but not enough time for the influxdb
+
+sixth test:
+almost perfect detection.
+increasing time
+
+seventh test:
+removing powerup function that was used before for testing as it messes up the timing
+decreasing a little read-out time
+
+eigth test:
+found issues with thread timing. fixing and reducing read-out time.
+
+nineth test:
+1 alarm missing from each email triggers. substantial progress.
+increasing read-out
+
+tenth test:
+read-out is not the problem. syncing threads.
+problem with testing data.
+reducing read-out for better performance.
+
+code is reading well
+input data was the problem
+
+8 detector test passed.
+
+found problem filling is getting triggered for no alarm
